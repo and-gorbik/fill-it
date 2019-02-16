@@ -1,6 +1,8 @@
 class Item:
     def __init__(self, src, chr):
         self._src = src.replace('#', chr)
+        self._posi = 0
+        self._posj = 0
         self.chr = chr
         self.points, self.width, self.height = self._parse_to_set(chr)
 
@@ -23,6 +25,11 @@ class Item:
     def is_correct(self):
         return self.width == self.height
 
+    def set_position(self, i, j):
+        self._posi, self._posj = i, j
+    
+    def get_position(self):
+        return self._posi, self._posj
 
 if __name__ == '__main__':
     s = "##..\n##..\n....\n....\n"
