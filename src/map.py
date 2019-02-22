@@ -44,7 +44,6 @@ class Map:
     def __init__(self, items, size=2):
         self._container = MapContainer(items)
         self._resize_map(size)
-        # self._reset_position()
 
     def __str__(self):
         return "\n".join(["".join(line) for line in self._data])
@@ -83,6 +82,10 @@ class Map:
                     item.set_position(curi, curj)
                     print(self, '\n')
                     return True
+                curj += 1
+            curi += 1
+            curj = 0
+        self._container.next().set_position(0, 0)
         return False
 
     def _remove_item(self):
@@ -90,44 +93,21 @@ class Map:
         curi, curj = item.get_position()
         for i, j in item.points:
             self._data[i + curi][j + curj] = '.'
-        item.set_position(curi + 1, curj + 1)
-
-    # def _next_position(self):
-    #     if self._curj + 1 < self.size:
-    #         self._curj += 1
-    #         return True
-    #     if self._curi + 1 < self.size:
-    #         self._curi += 1
-    #         self._curj = 0
-    #         return True
-    #     return False
-
-    # def __next__(self):
-    #     if self._curj + 1 < self.size:
-    #         self._curj += 1
-    #         return self._curi, self._curj
-    #     if self._curi + 1 < self.size:
-    #         self._curi += 1
-    #         self._curj = 0
-    #         return self._curi, self._curj
-    #     raise StopIteration
-
-    # def __iter__(self):
-    #     return self
-
-    # def _reset_position(self):
-    #     self._curi, self._curj = 0, -1
+        if curj + 1 < self.size:
+            item.set_position(curi, curj + 1)
+        elif curi + 1 < self.size:
+            item.set_position(curi + 1, curj)
 
 
 if __name__ == '__main__':
-    A = "#...\n#...\n#...\n#...\n"
-    B = "#...\n##..\n.#..\n....\n"
-    C = "##..\n##..\n....\n....\n"
-    D = "#...\n###.\n....\n....\n"
+    A = "##..\n.#..\n.#..\n....\n"
+    B = "####\n....\n....\n....\n"
+    C = "#...\n###.\n....\n....\n"
+    D = "##..\n.##.\n....\n....\n"
     a = Item(A, 'A')
     b = Item(B, 'B')
     c = Item(C, 'C')
     d = Item(D, 'D')
     m = Map([a, b, c, d])
     m.fill()
-    m.print()
+    print(m)
