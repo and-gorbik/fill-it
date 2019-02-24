@@ -1,4 +1,8 @@
+from sys import stderr
+from math import sqrt, ceil
+
 from item import Item
+from extimer import extimer
 
 class MapContainer:
     """ хранит объекты, размещенные на поле """
@@ -41,9 +45,10 @@ class MapContainer:
 
 
 class Map:
-    def __init__(self, items, size=2):
+    def __init__(self, items):
         self._container = MapContainer(items)
-        self._resize_map(size)
+        self._size = ceil(2 * sqrt(len(items)))
+        self._resize_map(self._size)
 
     def __str__(self):
         return "\n".join(["".join(line) for line in self._data])
@@ -99,15 +104,82 @@ class Map:
             item.set_position(curi + 1, curj)
 
 
+class Optimizer:
+    def __init__(self):
+        self._vector_i = []
+        self._vector_j = []
+        self._table = []
+        self._size = 0
+
+    def _calculate_cell(self, i, j):
+        result = 0
+        if j - 1 >= 0 and self._table[i][j - 1] != 0:
+            result += 1
+        if j + 1 < self._size and self._table[i][j + 1] != 0:
+            result += 1
+        if i - 1 >= 0 and self._table[i - 1][j] != 0:
+            result += 1
+        if i + 1 < self._size and self._table[i + 1][j] != 0:
+            result += 1
+        self._table[i][j] = result
+
+    def init_map(self, size):
+        if size < 2:
+            print("Size must be >= 2!", file=stderr)
+            size = 2
+        self._size = size
+        self._vector_i = [4 for _ in range(size)]
+        self._vector_j = self._vector_i[:]
+        self._table = [[4 for _ in range(size)] for _ in range(size)]
+        for i in range(size):
+            for j in range(size):
+                if i == 0 or i == size - 1 or j == 0 or j == size - 1:
+                    self._table[i][j] = 3
+                    if (i == 0 or i == size - 1) and (j == 0 or j == size - 1):
+                        self._table[i][j] = 2
+                else:
+                    self._table[i][j] = 4
+
+    def set_item(self, item: Item):
+        curi, curj = item.get_position()
+        for i, j in item.points:
+            pass
+
+    def unset_item(self, item):
+        pass
+
+    def is_available_row(self, i):
+        """ позволяет узнать, нужно ли проверять строку """
+
+    def is_available_col(self, j):
+        """ позволяет узнать, нужно ли проверять столбец """
+
+    def __str__(self):
+        return "\n".join(["".join(str(line)) for line in self._table])
+        
+
 if __name__ == '__main__':
-    A = "##..\n.#..\n.#..\n....\n"
-    B = "####\n....\n....\n....\n"
-    C = "#...\n###.\n....\n....\n"
-    D = "##..\n.##.\n....\n....\n"
-    a = Item(A, 'A')
-    b = Item(B, 'B')
-    c = Item(C, 'C')
-    d = Item(D, 'D')
-    m = Map([a, b, c, d])
-    m.fill()
-    print(m)
+    # A = "#...\n#...\n#...\n#...\n"
+    # B = "####\n....\n....\n....\n"
+    # C = "###.\n..#.\n....\n....\n"
+    # D = ".##.\n##..\n....\n....\n"
+    # E = "##..\n##..\n....\n....\n"
+    # F = "##..\n.##.\n....\n....\n"
+    # G = "##..\n.#..\n.#..\n.#..\n"
+    # H = "###.\n.#..\n....\n....\n"
+    # a = Item(A, 'A')
+    # b = Item(B, 'B')
+    # c = Item(C, 'C')
+    # d = Item(D, 'D')
+    # e = Item(E, 'E')
+    # f = Item(F, 'F')
+    # g = Item(G, 'G')
+    # h = Item(H, 'H')
+    # m = Map([a, b, c, d, e, f, g, h])
+    # with extimer():
+    #     m.fill()
+    # print(m)
+    o = Optimizer()
+    o.init_map(5)
+    o._calculate_cell(4, 4)
+    print(o)
