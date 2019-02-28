@@ -1,28 +1,48 @@
-from .item import Item
-from .map import Map
+from item import Item
+from map import Map
+from extimer import extimer
 
 class SolverError(Exception):
     pass
 
 class Solver:
-    def __init__(self, filename, empty, block):
+    def __init__(self, filename):
         with open(filename) as f:
-            self._items = self._read_items(f, empty, block)
+            self._items = self._read_items(f)
         if self._items is None:
             raise SolverError("Incorrect input")
         self._map = Map(self._items)
     
-    def _read_items(self, f, ec, bc):
-        # чтение из файла
-        # None, если ошибка при чтении
-        # возвращает список элементов
+    def _read_items(self, f):
+        items = []
+        symbol = 'A'
+        while True:
+            src = f.read(20)
+            if not src:
+                break
+            item = Item(src, symbol)
+            if item.is_correct():
+                items.append(item)
+            else:
+                return None
+            symbol = chr(ord(symbol) + 1)
+        return items
+
+    def print_items(self):
+        for i in self._items:
+            print(i, "\n")
 
     def response(self):
         print(self._map)
 
     def run(self):
-        self._map.fill()
+        with extimer():
+            self._map.fill()
 
 
 if __name__ == '__main__':
-    pass
+    from init import run
+
+    run(filename='data.txt')
+    solver = Solver(filename='data.txt')
+    solver.print_items()

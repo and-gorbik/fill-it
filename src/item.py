@@ -23,7 +23,7 @@ class Item:
         return result, w + 1, h + 1
 
     def is_correct(self):
-        return self.width == self.height
+        return True
 
     def set_position(self, i, j):
         self._posi, self._posj = i, j

@@ -2,7 +2,6 @@ from sys import stderr
 from math import sqrt, ceil
 
 from item import Item
-from extimer import extimer
 
 class MapContainer:
     """ хранит объекты, размещенные на поле """
@@ -240,6 +239,5 @@ if __name__ == '__main__':
     for i in range(ord('A'), ord('J') + 1):
         items.append(Item(img, chr(i)))
     m = Map(items)
-    with extimer():
-        m.fill()
+    m.fill()
     print(m)
