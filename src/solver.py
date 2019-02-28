@@ -1,22 +1,27 @@
 from .item import Item
 from .map import Map
 
+class SolverError(Exception):
+    pass
+
 class Solver:
     def __init__(self, filename, empty, block):
-        self._map = Map()
         with open(filename) as f:
             self._items = self._read_items(f, empty, block)
         if self._items is None:
             raise SolverError("Incorrect input")
+        self._map = Map(self._items)
     
     def _read_items(self, f, ec, bc):
-        pass
+        # чтение из файла
+        # None, если ошибка при чтении
+        # возвращает список элементов
 
     def response(self):
-        return self._map.print()
+        print(self._map)
 
     def run(self):
-        self._map.fill(self._items)
+        self._map.fill()
 
 
 if __name__ == '__main__':

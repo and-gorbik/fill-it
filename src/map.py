@@ -47,7 +47,7 @@ class MapContainer:
 class Map:
     def __init__(self, items):
         self._container = MapContainer(items)
-        self._size = ceil(2 * sqrt(len(items)))
+        self._size = ceil(sqrt(4 * len(items)))
         self._resize_map(self._size)
 
     def __str__(self):
@@ -66,7 +66,7 @@ class Map:
         self._data = [['.' for _ in range(size)] for _ in range(size)]
         for i in self._container.unplaced_items():
             i.set_position(0, 0)
-        self._optimizer = Optimizer(size=size)
+        # self._optimizer = Optimizer(size=size)
 
     def _check_position(self, curi, curj):
         for i, j in self._container.next().points:
@@ -79,18 +79,19 @@ class Map:
     def _place_item(self):
         curi, curj = self._container.next().get_position()
         while curi < self.size:
-            if self._optimizer.is_available_row(curi):
-                while curj < self.size:
-                    if self._optimizer.is_available_col(curj) and self._check_position(curi, curj):
-                        item = self._container.push()
-                        for i, j in item.points:
-                            self._data[i + curi][j + curj] = item.chr
-                        item.set_position(curi, curj)
-                        self._optimizer.set_item(item)
-                        print(self, '\n')
-                        print(self._optimizer)
-                        return True
-                    curj += 1
+            # if self._optimizer.is_available_row(curi):
+            while curj < self.size:
+                # if self._optimizer.is_available_col(curj):
+                if self._check_position(curi, curj):
+                    item = self._container.push()
+                    for i, j in item.points:
+                        self._data[i + curi][j + curj] = item.chr
+                    item.set_position(curi, curj)
+                    # self._optimizer.set_item(item)
+                    print(self, '\n')
+                    # print(self._optimizer)
+                    return True
+                curj += 1
             curi += 1
             curj = 0
         self._container.next().set_position(0, 0)
@@ -101,7 +102,7 @@ class Map:
         curi, curj = item.get_position()
         for i, j in item.points:
             self._data[i + curi][j + curj] = '.'
-        self._optimizer.unset_item(item)
+        # self._optimizer.unset_item(item)
         if curj + 1 < self.size:
             item.set_position(curi, curj + 1)
         elif curi + 1 < self.size:
@@ -217,23 +218,28 @@ class Optimizer:
         
 
 if __name__ == '__main__':
-    A = "#...\n#...\n#...\n#...\n"
-    B = "####\n....\n....\n....\n"
-    C = "###.\n..#.\n....\n....\n"
-    D = ".##.\n##..\n....\n....\n"
-    E = "##..\n##..\n....\n....\n"
-    F = "##..\n.##.\n....\n....\n"
-    G = "##..\n.#..\n.#..\n.#..\n"
-    H = "###.\n.#..\n....\n....\n"
-    a = Item(A, 'A')
-    b = Item(B, 'B')
-    c = Item(C, 'C')
-    d = Item(D, 'D')
-    e = Item(E, 'E')
-    f = Item(F, 'F')
-    g = Item(G, 'G')
-    h = Item(H, 'H')
-    m = Map([a, b, c, d, e, f, g, h])
+    # A = "#...\n#...\n#...\n#...\n"
+    # B = "####\n....\n....\n....\n"
+    # C = "###.\n..#.\n....\n....\n"
+    # D = ".##.\n##..\n....\n....\n"
+    # E = "##..\n##..\n....\n....\n"
+    # F = "##..\n.##.\n....\n....\n"
+    # G = "##..\n.#..\n.#..\n.#..\n"
+    # H = "###.\n.#..\n....\n....\n"
+    # a = Item(A, 'A')
+    # b = Item(B, 'B')
+    # c = Item(C, 'C')
+    # d = Item(D, 'D')
+    # e = Item(E, 'E')
+    # f = Item(F, 'F')
+    # g = Item(G, 'G')
+    # h = Item(H, 'H')
+    # m = Map([a, b, c, d, e, f, g, h])
+    items = []
+    img = "##..\n.##.\n....\n....\n"
+    for i in range(ord('A'), ord('J') + 1):
+        items.append(Item(img, chr(i)))
+    m = Map(items)
     with extimer():
         m.fill()
     print(m)
