@@ -3,13 +3,13 @@ class Item:
         """ src is a valid string, if it contains only chr symbols and 4 '\n' symbols """
         self._posi, self._posj = 0, 0
         self.chr = chr
-        self._valid = (src.count('\n') == 5 and src.count('#') == 4 and src.count('.') == 12)
+        self._valid = (src.count('\n') == 4 and src.count('#') == 4 and src.count('.') == 12)
         self._data = self._to_matrix(src.replace('#', chr))
         self.points = self._set_points()
         self._validate()
 
     def __str__(self):
-        # return self._src        
+        return "\n".join(self._data) if self._data is not None else ""    
 
     def _to_matrix(self, src: str):
         if self._valid:
@@ -23,8 +23,8 @@ class Item:
 
     def _get_offset(self):
         dj = min([line.find(self.chr) for line in self._data]) + 1
-        i, di = 0, 0
-        while not self._data[i].count(self.chr):
+        di = 0
+        while not self._data[di].count(self.chr):
             di += 1
         return di, dj
 
@@ -39,12 +39,24 @@ class Item:
                     points.add((i - di, j - dj))
         return points
 
-    def _validate():
+    def _validate(self):
         """ check figure correctness """
         if self._data is None:
             return
-        # проверка фигуры на валидность
-        self._valid = True
+        touchings = 0
+        for i, j in self.points:
+            if j - 1 >= 0 and (i, j - 1) in self.points:
+                touchings += 1
+            if j + 1 < 4 and (i, j + 1) in self.points:
+                touchings += 1
+            if i - 1 >= 0 and (i - 1, j) in self.points:
+                touchings += 1
+            if i + 1 < 4 and (i + 1, j) in self.points:
+                touchings += 1
+        if touchings < 6:
+            self._valid = False
+        else:
+            self._valid = True
 
     def is_valid(self):
         return self._valid
@@ -56,7 +68,7 @@ class Item:
         return self._posi, self._posj
 
 if __name__ == '__main__':
-    s = "##..\n##..\n....\n....\n"
+    s = ".#..\n##..\n.#..\n....\n"
     i = Item(s, 'A')
     print(i)
     print(i.points)
