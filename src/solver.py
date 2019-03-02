@@ -21,7 +21,7 @@ class Solver:
             if not src:
                 break
             item = Item(src, symbol)
-            if item.is_correct():
+            if item.is_valid():
                 items.append(item)
             else:
                 return None
