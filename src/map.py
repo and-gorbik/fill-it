@@ -87,7 +87,7 @@ class Map:
                         self._data[i + curi][j + curj] = item.chr
                     item.set_position(curi, curj)
                     # self._optimizer.set_item(item)
-                    print(self, '\n')
+                    # print(self, '\n')
                     # print(self._optimizer)
                     return True
                 curj += 1

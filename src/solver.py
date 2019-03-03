@@ -26,6 +26,7 @@ class Solver:
             else:
                 return None
             symbol = chr(ord(symbol) + 1)
+            f.read(1) # \n
         return items
 
     def print_items(self):
@@ -46,3 +47,5 @@ if __name__ == '__main__':
     run(filename='data.txt')
     solver = Solver(filename='data.txt')
     solver.print_items()
+    solver.run()
+    solver.response()
