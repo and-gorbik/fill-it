@@ -217,23 +217,6 @@ class Optimizer:
         
 
 if __name__ == '__main__':
-    # A = "#...\n#...\n#...\n#...\n"
-    # B = "####\n....\n....\n....\n"
-    # C = "###.\n..#.\n....\n....\n"
-    # D = ".##.\n##..\n....\n....\n"
-    # E = "##..\n##..\n....\n....\n"
-    # F = "##..\n.##.\n....\n....\n"
-    # G = "##..\n.#..\n.#..\n.#..\n"
-    # H = "###.\n.#..\n....\n....\n"
-    # a = Item(A, 'A')
-    # b = Item(B, 'B')
-    # c = Item(C, 'C')
-    # d = Item(D, 'D')
-    # e = Item(E, 'E')
-    # f = Item(F, 'F')
-    # g = Item(G, 'G')
-    # h = Item(H, 'H')
-    # m = Map([a, b, c, d, e, f, g, h])
     items = []
     img = "##..\n.##.\n....\n....\n"
     for i in range(ord('A'), ord('J') + 1):

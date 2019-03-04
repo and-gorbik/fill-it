@@ -9,7 +9,12 @@ class Item:
         self._validate()
 
     def __str__(self):
-        return "\n".join(self._data) if self._data is not None else ""    
+        if self._data is None:
+            return ""
+        matrix = [['.' for _ in range(4)] for _ in range(4)]
+        for i, j in self.points:
+            matrix[i][j] = self.chr
+        return "\n".join("".join(matrix[i]) for i in range(4))
 
     def _to_matrix(self, src: str):
         if self._valid:
@@ -22,7 +27,7 @@ class Item:
         return None
 
     def _get_offset(self):
-        dj = min([line.find(self.chr) for line in self._data]) + 1
+        dj = min([line.find(self.chr) for line in self._data], key=lambda a: 3 if a < 0 else a)
         di = 0
         while not self._data[di].count(self.chr):
             di += 1
@@ -68,8 +73,8 @@ class Item:
         return self._posi, self._posj
 
 if __name__ == '__main__':
-    s = ".#..\n##..\n.#..\n....\n"
-    i = Item(s, 'A')
+    A = ".###\n...#\n....\n....\n"
+    i = Item(A, 'A')
     print(i)
     print(i.points)
     print("is correct?", i.is_valid())
