@@ -22,39 +22,45 @@ static char **_to_matrix(const char *s)
 
     if (!(matrix = ft_strsplit(s, '\n')))
         return (NULL);
-    i = -1;
-    while (matrix[++i])
+    i = 0;
+    while (matrix[i])
     {
         if (ft_strlen(matrix[i]) != 4)
         {
             while (*matrix)
-            {
-                free(*matrix);
-                ++matrix;
-            }
+                free(*matrix++);
             free(matrix);
             return (NULL);
         }
+        ++i;
     }
     return (matrix);
 }
 
 t_point     _get_offset(char **matrix)
 {
-    int di;
-    int dj;
-    int i;
-    int j;
+    t_point offset;
+    int     i;
+    char    *ptr;
 
+    offset.i = 0;
+    offset.j = 4;
     i = 0;
-    while (i < 4)
-    
+    while (matrix[i])
+    {
+        ptr = ft_strchr(matrix[i], '#');
+        if (ptr - matrix[i] < offset.j)
+            offset.j = ptr - matrix[i];
+        if (!ptr)
+            offset.i += 1;
+        ++i;
+    }
+    return (offset);
 }
 
 static void _set_points(t_item *item, char **matrix)
 {
     t_point offset;
-    char    *s;
     int     i;
     int     k;
 
@@ -64,17 +70,20 @@ static void _set_points(t_item *item, char **matrix)
         return ;
     }
     offset = _get_offset(matrix);
-    k = -1;
-    i = -1;
-    while (matrix[++i])
+    k = 0;
+    i = 0;
+    while (matrix[i / 4][i % 4])
     {
-        ft_strchr(matrix[i], '#');
+        if (matrix[i / 4][i % 4] == '#')
+        {
+            item->points[k].i = i / 4 - offset.i;
+            item->points[k].j = i % 4 - offset.j;
+            ++k;
+        }
+        ++i;
     }
     while (*matrix)
-    {
-        free(*matrix);
-        ++matrix;
-    }
+        free(*matrix++);
     free(matrix);
 }
 
@@ -87,19 +96,21 @@ static void _validate_item(t_item *item)
     if (!item->is_valid)
         return;
     counter = 0;
-    i = -1;
-    while (++i < 4)
+    i = 0;
+    while (i < 4)
     {
         t_point cur = item->points[i];
-        j = -1;
-        while (++j < 4)
+        j = 0;
+        while (j < 4)
         {
             t_point other = item->points[j];
             counter += (cur.j - 1 >= 0 && other.i == cur.i && other.j == cur.j - 1);
             counter += (cur.i - 1 >= 0 && other.i == cur.i - 1 && other.j == cur.j);
             counter += (cur.j + 1 < 4 && other.i == cur.i && other.j == cur.j + 1);
             counter += (cur.i + 1 < 4 && other.i == cur.i + 1 && other.j == cur.j);
+            ++j;
         }
+        ++i;
     }
     if (counter < 6)
         item->is_valid = 0;

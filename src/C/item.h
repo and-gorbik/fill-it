@@ -12,7 +12,6 @@ typedef struct  s_item
     short       posj;
     char        chr;
     char        is_valid;
-    char        *data[4];
     t_point     points[4];
 }               t_item;
 
