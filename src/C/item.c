@@ -6,25 +6,11 @@
 /*   By: sjacelyn <sjacelyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 09:38:02 by sjacelyn          #+#    #+#             */
-/*   Updated: 2019/03/09 14:20:37 by sjacelyn         ###   ########.fr       */
+/*   Updated: 2019/03/09 14:39:45 by sjacelyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "item.h"
-
-static int	ft_strcount(const char *s, char chr)
-{
-	int	counter;
-
-	counter = 0;
-	while (*s)
-	{
-		if (*s == chr)
-			++counter;
-		++s;
-	}
-	return (counter);
-}
 
 static char		**to_matrix(const char *s)
 {
