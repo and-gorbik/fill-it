@@ -125,8 +125,8 @@ t_item			*create_item(char chr, const char *src)
 	if (!(item = malloc(sizeof(t_item))))
 		return (NULL);
 	item->chr = chr;
-	item->posi = 0;
-	item->posj = 0;
+	item->pos.i = 0;
+	item->pos.j = 0;
 	item->is_valid = (ft_strlen(src) == 20 && ft_strcount(src, '\n') == 4 &&
 					ft_strcount(src, '#') == 4 && ft_strcount(src, '.') == 12);
 	set_points(item, to_matrix(src));

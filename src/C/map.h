@@ -19,10 +19,10 @@ typedef struct	s_map
 {
 	t_container	*container;
 	int			size;
-	char		**data;
+	char		*data;
 }				t_map;
 
-t_map			*create_map(t_container *container, t_list *items);
+t_map			*create_map(t_container *container);
 
 static void		resize(t_map *map);
 static int		check_position(t_map *map, int curi, int curj);

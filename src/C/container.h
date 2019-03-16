@@ -19,7 +19,7 @@
 ** Container moves items between lists.
 ** `next` contains input items.
 ** `placed_items` contains items pushed into container.
-** `size` keeps size of `placed_items`.
+** `size` keeps total size of all items.
 */
 
 typedef struct	s_container

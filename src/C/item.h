@@ -24,10 +24,9 @@ typedef struct	s_point
 
 typedef struct	s_item
 {
-	short		posi;
-	short		posj;
 	char		chr;
 	char		is_valid;
+	t_point		pos;
 	t_point		points[4];
 }				t_item;
 

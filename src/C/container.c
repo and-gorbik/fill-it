@@ -23,6 +23,11 @@ t_container		*create_container(t_list *items)
 	container->next = items;
 	container->placed_items = NULL;
 	container->size = 0;
+	while (items)
+	{
+		container->size += 1;
+		items = items->next;
+	}
 	return (container);
 }
 
