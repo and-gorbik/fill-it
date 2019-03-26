@@ -6,7 +6,7 @@
 /*   By: sjacelyn <sjacelyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 19:09:25 by sjacelyn          #+#    #+#             */
-/*   Updated: 2019/03/26 13:50:27 by sjacelyn         ###   ########.fr       */
+/*   Updated: 2019/03/26 14:22:59 by sjacelyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ static void		print_map(const char *data, int size)
 	}
 }
 
+// TODO: в случае ошибок будет неправильно освобождаться память => исправить
+// TODO: если файл не существует, некорректное поведение программы
 int				main(int argc, char **argv)
 {
 	t_map		*map;
@@ -85,12 +87,10 @@ int				main(int argc, char **argv)
 	else if (!(map = create_map(container)))
 		write(1, "error\n", 6);
 	else
-	{
 		print_map(map->data, map->size);
-		free(map->data);
-		delete_container(&map->container);
-		free(map);
-		close(fd);
-	}
+	free(map->data);
+	delete_container(&map->container);
+	free(map);
+	close(fd);
 	return (0);
 }
