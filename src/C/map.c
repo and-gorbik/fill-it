@@ -6,34 +6,11 @@
 /*   By: sjacelyn <sjacelyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 20:45:14 by sjacelyn          #+#    #+#             */
-/*   Updated: 2019/03/09 20:51:39 by sjacelyn         ###   ########.fr       */
+/*   Updated: 2019/03/26 14:06:30 by sjacelyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
-
-t_map			*create_map(t_container *container)
-{
-	t_map	*map;
-
-	if (!(map = malloc(sizeof(t_map))))
-		return (NULL);
-	map->size = 0;
-	map->container = container;
-	map->data = NULL;
-	resize(map);
-	while (container->next)
-	{
-		if (!place_item(map))
-		{
-			if (!container->placed_items)
-				resize(map);
-			else
-				remove_item(map);
-		}	
-	}
-	return (map);
-}
 
 static void		resize(t_map *map)
 {
@@ -109,7 +86,8 @@ static void		remove_item(t_map *m)
 	t_point	cur;
 	int		k;
 
-	((t_item *)m->container->next->content)->pos = cur;
+	((t_item *)m->container->next->content)->pos.i = 0;
+	((t_item *)m->container->next->content)->pos.j = 0;
 	i = (t_item *)pop(m->container)->content;
 	cur = i->pos;
 	k = -1;
@@ -126,4 +104,27 @@ static void		remove_item(t_map *m)
 		i->pos.i = cur.i + 1;
 		i->pos.j = cur.j;
 	}
+}
+
+t_map			*create_map(t_container *container)
+{
+	t_map	*map;
+
+	if (!(map = malloc(sizeof(t_map))))
+		return (NULL);
+	map->size = 0;
+	map->container = container;
+	map->data = NULL;
+	resize(map);
+	while (container->next)
+	{
+		if (!place_item(map))
+		{
+			if (!container->placed_items)
+				resize(map);
+			else
+				remove_item(map);
+		}
+	}
+	return (map);
 }

@@ -6,7 +6,7 @@
 /*   By: sjacelyn <sjacelyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 15:39:07 by sjacelyn          #+#    #+#             */
-/*   Updated: 2019/03/09 15:49:42 by sjacelyn         ###   ########.fr       */
+/*   Updated: 2019/03/26 13:53:12 by sjacelyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct	s_container
 {
 	t_list		*placed_items;
 	t_list		*next;
-	size_t		size;
+	int			size;
 }				t_container;
 
 t_container		*create_container(t_list *items);
