@@ -1,13 +1,22 @@
 NAME = fillit
 SRC = item.c container.c map.c main.c
-OBJ = $(SRC : .c = .o)
-LIB = libft.a
-all: $(NAME)
+# OBJ = $(SRC : .c = .o)
+LDIR = libft
+LNAME = libft.a
 
+all: $(NAME)
+	
 $(NAME):
-	gcc -Wall -Wextra -Werror -o $(NAME) $(SRC) $(LIB)
+	@make -C $(LDIR)
+	gcc -Wall -Wextra -Werror -o $(NAME) $(SRC) $(LDIR)/$(LNAME)
+
 clean:
-	rm -rf $(NAME)
+	@make -C $(LDIR) clean
+
 fclean: clean
-	rm -rf $(OBJ)
+	@make -C $(LDIR) fclean
+	rm -f $(NAME)
+
 re: fclean all
+	
+

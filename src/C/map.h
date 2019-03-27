@@ -6,7 +6,7 @@
 /*   By: sjacelyn <sjacelyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 20:25:45 by sjacelyn          #+#    #+#             */
-/*   Updated: 2019/03/26 11:33:56 by sjacelyn         ###   ########.fr       */
+/*   Updated: 2019/03/27 15:34:18 by sjacelyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ typedef struct	s_map
 	char		*data;
 }				t_map;
 
-t_map			*create_map(t_container *container);
+t_map			*create_map(t_list *items);
 
 #endif

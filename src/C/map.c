@@ -6,7 +6,7 @@
 /*   By: sjacelyn <sjacelyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 20:45:14 by sjacelyn          #+#    #+#             */
-/*   Updated: 2019/03/26 14:06:30 by sjacelyn         ###   ########.fr       */
+/*   Updated: 2019/03/27 15:37:52 by sjacelyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,21 +106,25 @@ static void		remove_item(t_map *m)
 	}
 }
 
-t_map			*create_map(t_container *container)
+t_map			*create_map(t_list *items)
 {
 	t_map	*map;
 
 	if (!(map = malloc(sizeof(t_map))))
 		return (NULL);
 	map->size = 0;
-	map->container = container;
+	if (!(map->container = create_container(items)))
+	{
+		free(map);
+		return (NULL);
+	}
 	map->data = NULL;
 	resize(map);
-	while (container->next)
+	while (map->container->next)
 	{
 		if (!place_item(map))
 		{
-			if (!container->placed_items)
+			if (!map->container->placed_items)
 				resize(map);
 			else
 				remove_item(map);

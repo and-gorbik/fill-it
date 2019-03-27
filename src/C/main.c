@@ -6,7 +6,7 @@
 /*   By: sjacelyn <sjacelyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 19:09:25 by sjacelyn          #+#    #+#             */
-/*   Updated: 2019/03/26 14:22:59 by sjacelyn         ###   ########.fr       */
+/*   Updated: 2019/03/27 16:18:28 by sjacelyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,30 +67,39 @@ static void		print_map(const char *data, int size)
 	}
 }
 
-// TODO: в случае ошибок будет неправильно освобождаться память => исправить
-// TODO: если файл не существует, некорректное поведение программы
+static void		delete_map(t_map **map)
+{
+	delete_container(&(*map)->container);
+	free((*map)->data);
+	free(*map);
+	*map = NULL;
+}
+
 int				main(int argc, char **argv)
 {
 	t_map		*map;
-	t_container	*container;
 	t_list		*items;
 	int			fd;
 
 	if (argc != 2)
+	{
 		write(1, "Usage:	./fillit <file with tetrominos>\n", 39);
-	else if (!(fd = open(argv[1], O_RDONLY) < 0))
-		write(1, "error\n", 6);
-	else if (!(items = read_valid_items(fd)))
-		write(1, "error\n", 6);
-	else if (!(container = create_container(items)))
-		write(1, "error\n", 6);
-	else if (!(map = create_map(container)))
-		write(1, "error\n", 6);
-	else
-		print_map(map->data, map->size);
-	free(map->data);
-	delete_container(&map->container);
-	free(map);
+		return (0);
+	}
+	if (((fd = open(argv[1], O_RDONLY)) >= 0) && (read(fd, NULL, 0) >= 0))
+	{
+		if ((items = read_valid_items(fd)))
+		{
+			if ((map = create_map(items)))
+			{
+				print_map(map->data, map->size);
+				delete_map(&map);
+				return (0);
+			}
+			ft_lstdel(&items, del);
+		}
+	}
+	write(1, "error\n", 6);
 	close(fd);
 	return (0);
 }
