@@ -6,7 +6,7 @@
 /*   By: sjacelyn <sjacelyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 20:21:06 by sjacelyn          #+#    #+#             */
-/*   Updated: 2019/03/09 20:21:34 by sjacelyn         ###   ########.fr       */
+/*   Updated: 2019/03/28 20:39:13 by sjacelyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,6 @@ t_container		*create_container(t_list *items)
 		items = items->next;
 	}
 	return (container);
-}
-
-static void		del(void *data, size_t size)
-{
-	if (size != 0)
-		free(data);
 }
 
 void			delete_container(t_container **container)

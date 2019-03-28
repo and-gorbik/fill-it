@@ -6,7 +6,7 @@
 /*   By: sjacelyn <sjacelyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 09:38:02 by sjacelyn          #+#    #+#             */
-/*   Updated: 2019/03/09 19:10:52 by sjacelyn         ###   ########.fr       */
+/*   Updated: 2019/03/28 19:30:06 by sjacelyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,10 @@ static t_point	get_offset(char **matrix)
 			offset.j = ptr - matrix[i];
 		++i;
 	}
-	offset.i = 0;
 	i = 0;
 	while (matrix[i] && !ft_strchr(matrix[i], '#'))
-	{
-		offset.i = i;
 		++i;
-	}
+	offset.i = i;
 	return (offset);
 }
 

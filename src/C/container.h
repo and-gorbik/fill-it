@@ -6,7 +6,7 @@
 /*   By: sjacelyn <sjacelyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 15:39:07 by sjacelyn          #+#    #+#             */
-/*   Updated: 2019/03/26 13:53:12 by sjacelyn         ###   ########.fr       */
+/*   Updated: 2019/03/28 20:39:05 by sjacelyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CONTAINER_H
 
 # include "item.h"
+# include "del.h"
 
 /*
 ** Container moves items between lists.

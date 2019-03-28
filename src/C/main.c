@@ -6,18 +6,12 @@
 /*   By: sjacelyn <sjacelyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 19:09:25 by sjacelyn          #+#    #+#             */
-/*   Updated: 2019/03/27 16:18:28 by sjacelyn         ###   ########.fr       */
+/*   Updated: 2019/03/28 20:39:33 by sjacelyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "map.h"
-
-static void		del(void *data, size_t size)
-{
-	if (size != 0)
-		free(data);
-}
 
 static t_list	*read_valid_items(int fd)
 {
@@ -26,11 +20,12 @@ static t_list	*read_valid_items(int fd)
 	t_item	*item;
 	char	buf[21];
 	char	chr;
+	int		size;
 
 	chr = 'A' - 1;
-	while ((read(fd, buf, 21)))
+	while ((size = read(fd, buf, 21)))
 	{
-		buf[20] = '\0';
+		buf[size] = '\0';
 		if (!(item = create_item(++chr, buf)))
 		{
 			ft_lstdel(&lst, del);
