@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+void	print_matrix(char **m, int n)
+{
+	for (int i = 0; i < n; ++i)
+		printf("%s\n", m[i]);
+	printf("\n");
+}
+
+void			print_items(t_list *items)
+{
+	t_point	*points = NULL;
+
+	while (items)
+	{
+		char	map[] = "................";
+		points = ((t_item *)items->content)->points;
+		for (int i = 0; i < 4; ++i)
+			map[points[i].i * 4 + points[i].j] = ((t_item *)items->content)->chr;
+		for (int i = 0; i < 16; ++i)
+			write(1, &map[i], 1);
+		items = items->next;
+		write(1, "\n", 1);
+	}
+	write(1, "\n", 1);
+}
