@@ -13,34 +13,61 @@
 #include <fcntl.h>
 #include "map.h"
 
-static t_list	*read_valid_items(int fd)
+static int  read_valid_item(int fd, char chr, t_item **item)
 {
-	t_list	*lst;
-	t_list	*cur;
-	t_item	*item;
-	char	buf[21];
-	char	chr;
-	int		size;
+    char        buf[21];
+    int         size;
+    static int  next = 1;
 
-	chr = 'A' - 1;
-	while ((size = read(fd, buf, 21)))
-	{
-		buf[size] = '\0';
-		if (!(item = create_item(++chr, buf)))
-		{
-			ft_lstdel(&lst, del);
-			return (NULL);
-		}
-		if (!item->is_valid || !(cur = ft_lstnew(item, sizeof(t_item))))
-		{
-			ft_lstdel(&lst, del);
+    ft_memset(buf, '.', 21);
+    size = read(fd, buf, 20);
+    if (size != 20)
+        return (-1);
+    buf[20] = '\0';
+    next = 0;
+    if (!(ft_strlen(buf) == 20 && ft_strcount(buf, '\n') == 4
+        && ft_strcount(buf, '#') == 4 && ft_strcount(buf, '.') == 12))
+        return (-1);
+	if (!(*item = create_item(chr, buf)))
+        return (-1);
+    if (read(fd, buf, 1))
+    {
+        if (buf[0] == '\n')
+            next = 1;
+        else
+            return (-1);
+    }
+    else
+        next = 0;
+    return (next);
+}
+
+t_list  *get_valid_items(int fd)
+{
+    int     state;
+    t_list  *lst;
+    t_list  *cur;
+    t_item  *item;
+    char    chr;
+
+    chr = 'A' - 1;
+    lst = NULL;
+    state = 1;
+    while (state)
+    {
+		item = NULL;
+        state = read_valid_item(fd, ++chr, &item);
+        if (state < 0 || !item->is_valid ||
+            !(cur = ft_lstnew(item, sizeof(t_item))))
+        {
+            ft_lstdel(&lst, del);
 			free(item);
-			return (NULL);
-		}
-		free(item);
-		ft_lstappend(&lst, cur);
-	}
-	return (lst);
+            return (NULL);
+        }
+        free(item);
+        ft_lstappend(&lst, cur);
+    }
+    return (lst);
 }
 
 static void		print_map(const char *data, int size)
@@ -83,7 +110,7 @@ int				main(int argc, char **argv)
 	}
 	if (((fd = open(argv[1], O_RDONLY)) >= 0) && (read(fd, NULL, 0) >= 0))
 	{
-		if ((items = read_valid_items(fd)))
+		if ((items = get_valid_items(fd)))
 		{
 			if ((map = create_map(items)))
 			{
