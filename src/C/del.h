@@ -6,15 +6,15 @@
 /*   By: sjacelyn <sjacelyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:38:10 by sjacelyn          #+#    #+#             */
-/*   Updated: 2019/03/28 20:38:36 by sjacelyn         ###   ########.fr       */
+/*   Updated: 2019/04/03 12:06:19 by sjacelyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DELETER_H
-# define DELETER_H
+#ifndef DEL_H
+# define DEL_H
 
 # include <stdlib.h>
 
-void    del(void *data, size_t size);
+void	del(void *data, size_t size);
 
 #endif

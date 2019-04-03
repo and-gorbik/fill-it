@@ -20,8 +20,4 @@ fclean: clean
 re: fclean all
 	
 
-test:
-	@make -C $(LDIR)
-	gcc -Wall -Wextra -Werror -o $(NAME) $(SRC) $(LDIR)/$(LNAME) -g
-	@make -C $(LDIR) clean
 

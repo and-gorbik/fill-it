@@ -6,13 +6,13 @@
 /*   By: sjacelyn <sjacelyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 20:34:35 by sjacelyn          #+#    #+#             */
-/*   Updated: 2019/03/28 20:38:33 by sjacelyn         ###   ########.fr       */
+/*   Updated: 2019/04/03 12:26:35 by sjacelyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "del.h"
 
-void    del(void *data, size_t size)
+void	del(void *data, size_t size)
 {
 	if (size != 0)
 		free(data);
