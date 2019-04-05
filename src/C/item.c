@@ -6,7 +6,7 @@
 /*   By: sjacelyn <sjacelyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 09:38:02 by sjacelyn          #+#    #+#             */
-/*   Updated: 2019/03/28 19:30:06 by sjacelyn         ###   ########.fr       */
+/*   Updated: 2019/04/05 20:11:49 by sjacelyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,7 @@ t_item			*create_item(char chr, const char *src)
 	item->chr = chr;
 	item->pos.i = 0;
 	item->pos.j = 0;
-	item->is_valid = (ft_strlen(src) == 20 && ft_strcount(src, '\n') == 4 &&
-					ft_strcount(src, '#') == 4 && ft_strcount(src, '.') == 12);
+	item->is_valid = 1;
 	set_points(item, to_matrix(src));
 	validate_item(item);
 	return (item);

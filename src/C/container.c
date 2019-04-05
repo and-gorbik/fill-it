@@ -6,7 +6,7 @@
 /*   By: sjacelyn <sjacelyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 20:21:06 by sjacelyn          #+#    #+#             */
-/*   Updated: 2019/03/28 20:39:13 by sjacelyn         ###   ########.fr       */
+/*   Updated: 2019/04/05 20:25:04 by sjacelyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ t_container		*create_container(t_list *items)
 		container->size += 1;
 		items = items->next;
 	}
+	if (container->size > 26)
+		return (NULL);
 	return (container);
 }
 
